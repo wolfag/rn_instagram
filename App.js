@@ -7,9 +7,9 @@
  */
 
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
 
-import CardList from "./src/components/CardList";
+import Feed from "./src/screens/Feed";
 
 const items = [
   { id: 0, author: "Bob Ross" },
@@ -19,17 +19,24 @@ class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <CardList items={items} />
+        <Feed style={styles.feed} />
       </View>
     );
   }
 }
+
+const platformVersion =
+  Platform.OS === "ios" ? parseInt(Platform.Version, 10) : Platform.Version;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
     marginTop: 10
+  },
+  feed: {
+    flex: 1,
+    marginTop: Platform.OS === "android" || platformVersion < 11 ? 10 : 0
   }
 });
 

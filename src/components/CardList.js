@@ -17,12 +17,12 @@ export default class CardList extends React.Component {
     ).isRequired
   };
 
-  renderItem = ({ item }) => {
+  renderItem = ({ item: { id, author } }) => {
     return (
       <Card
-        fullname={item.author}
+        fullname={author}
         image={{
-          uri: getImageFromId(item.id)
+          uri: getImageFromId(id)
         }}
       />
     );
