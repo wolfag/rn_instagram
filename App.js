@@ -10,17 +10,19 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 import AuthorRow from "./src/components/AuthorRow";
+import Card from "./src/components/Card";
 
 class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <AuthorRow
+        <Card
           fullname={"First Last"}
           linkText={"Comments"}
           onPressLinkText={() => {
             console.log("Press");
           }}
+          image={{ uri: "https://unsplash.it/600/600" }}
         />
       </View>
     );
