@@ -1,19 +1,19 @@
 import React from "react";
-import {
-  StyleSheet,
-  ColorPropType,
-  Text,
-  View,
-  TouchableOpacity
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 
 import Avatar from "./Avatar";
+import getAvatarColor from "../utils/getAvatarColor";
+import getInitials from "../utils/getInitials";
 
 export default function AuthorRow({ fullname, linkText, onPressLinkText }) {
   return (
     <View style={styles.container}>
-      <Avatar size={35} initials={"TN"} backgroundColor={"red"} />
+      <Avatar
+        size={35}
+        initials={getInitials(fullname)}
+        backgroundColor={getAvatarColor(fullname)}
+      />
       <Text style={styles.text} numberOfLines={1}>
         {fullname}
       </Text>

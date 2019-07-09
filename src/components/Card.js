@@ -39,12 +39,12 @@ export default class Card extends React.Component {
           {loading && (
             <ActivityIndicator style={StyleSheet.absoluteFill} size={"large"} />
           )}
+          <Image
+            style={StyleSheet.absoluteFill}
+            source={image}
+            onLoad={this.handleLoad}
+          />
         </View>
-        <Image
-          style={StyleSheet.absoluteFill}
-          source={image}
-          onLoad={this.handleLoad}
-        />
       </View>
     );
   }
