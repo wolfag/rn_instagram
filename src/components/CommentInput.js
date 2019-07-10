@@ -40,7 +40,7 @@ export default class CommentInput extends React.Component {
           value={text}
           placeholder={placeholder}
           underlineColorAndroid="transparent"
-          onChangeText={this.onChangeText}
+          onChangeText={this.handleChangeText}
           onSubmitEditing={this.handleSubmitEditing}
         />
       </View>
@@ -50,7 +50,8 @@ export default class CommentInput extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomWidth: "rgba(0,0,0,0.1)",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: "rgba(0,0,0,0.1)",
     paddingHorizontal: 20,
     height: 60
   },

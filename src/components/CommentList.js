@@ -8,9 +8,11 @@ export default class CommentList extends React.Component {
   };
 
   renderItem = (item, index) => {
-    <View key={index} style={styles.comment}>
-      <Text>{item}</Text>
-    </View>;
+    return (
+      <View key={index} style={styles.comment}>
+        <Text>{item}</Text>
+      </View>
+    );
   };
 
   render() {

@@ -7,15 +7,12 @@
  */
 
 import React from "react";
-import { StyleSheet, View, Platform, Modal } from "react-native";
+import { StyleSheet, View, Platform, Modal, AsyncStorage } from "react-native";
 
 import Feed from "./src/screens/Feed";
 import Comments from "./src/screens/Comments";
 
-const items = [
-  { id: 0, author: "Bob Ross" },
-  { id: 1, author: "Chuck Norris" }
-];
+const ASYNC_STORAGE_COMMENTS_KEY = "ASYNC_STORAGE_COMMENTS_KEY";
 class App extends React.Component {
   state = {
     commentsForItem: {},
@@ -23,12 +20,46 @@ class App extends React.Component {
     selectItemId: null
   };
 
+  async componentDidMount() {
+    try {
+      const commentsForItem = await AsyncStorage.getItem(
+        ASYNC_STORAGE_COMMENTS_KEY
+      );
+      this.setState({
+        commentsForItem: commentsForItem ? JSON.parse(commentsForItem) : {}
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   openCommentScreen = id => {
     this.setState({ showModal: true, selectItemId: id });
   };
 
   closeCommentScreen = () => {
     this.setState({ showModal: false, selectItemId: null });
+  };
+
+  onSubmitComment = async text => {
+    const { selectItemId, commentsForItem } = this.state;
+    const comments = commentsForItem[selectItemId] || [];
+
+    const updated = {
+      ...commentsForItem,
+      [selectItemId]: [...comments, text]
+    };
+
+    this.setState({ commentsForItem: updated });
+
+    try {
+      await AsyncStorage.setItem(
+        ASYNC_STORAGE_COMMENTS_KEY,
+        JSON.stringify(updated)
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   render() {
@@ -49,6 +80,7 @@ class App extends React.Component {
             style={styles.container}
             comments={commentsForItem[selectItemId] || []}
             onClose={this.closeCommentScreen}
+            onSubmitComment={this.onSubmitComment}
           />
         </Modal>
       </View>
