@@ -1,0 +1,25 @@
+name: Close Milestone when close pr demo
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  update_milestone:
+    runs-on: ubuntu-latest
+    steps:
+      - name: run script
+        uses: actions/github-script@v6
+        env:
+          MILESTONE_NUMBER: ${{ github.event.pull_request.milestone.number }}
+        with:
+          script: |
+            const {owner, repo} = context.repo;
+
+            await github.rest.issues.updateMilestone({
+              owner,
+              repo,
+              milestone_number: process.env.MILESTONE_NUMBER,
+              state: 'closed'
+            });
